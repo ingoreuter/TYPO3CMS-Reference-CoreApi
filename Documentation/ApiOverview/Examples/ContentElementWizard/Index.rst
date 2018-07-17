@@ -39,7 +39,7 @@ The :file:`EXT:examples/pierror/class.tx_examples_pierror_wizicon.php` file look
        */
       function proc($wizardItems)   {
          $wizardItems['plugins_tx_examples_pierror'] = array(
-            'iconIdentifier' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('examples') . 'Resources/Public/Images/PiErrorWizard.png',
+            'iconIdentifier' => 'some-registrated-icon',
             'title' => $GLOBALS['LANG']->sL('LLL:EXT:examples/locallang.xlf:pierror_wizard_title'),
             'description' => $GLOBALS['LANG']->sL('LLL:EXT:examples/locallang.xlf:pierror_wizard_description'),
             'params' => '&defVals[tt_content][CType]=list&&defVals[tt_content][list_type]=examples_pierror'
@@ -55,6 +55,15 @@ are quite easy to understand. The "params" property defines the default values
 to be added to the new record link so that the right type of content element
 (and plugin in this case) is already selected. This uses the syntax demonstrated
 in the :ref:`edit-links` chapter.
+
+If the icon is not yet registrated, it needs to be registrated in :file:`ext_tables.php`:
+
+   $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+   $iconRegistry->registerIcon(
+	   'some-registrated-icon',
+	   \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+	   ['source' => 'EXT:examples/Resources/Public/Icons/ContentElementWizardIcon.svg']
+   );
 
 The result can be seen in the new content element wizard:
 
